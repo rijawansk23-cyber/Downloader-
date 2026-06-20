@@ -44,11 +44,20 @@
             transform: translateY(2px);
             box-shadow: 0 2px 5px rgba(6, 182, 212, 0.2);
         }
+        /* আইফ্রেম রেসপনসিভ ডিজাইন */
+        .iframe-container {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            background: rgba(10, 14, 26, 0.5);
+        }
     </style>
 </head>
 <body class="text-slate-200 min-h-screen flex flex-col justify-between">
 
-    <!-- Header / Navbar -->
     <header class="w-full max-w-5xl mx-auto px-4 py-6 flex justify-between items-center border-b border-cyan-900/30">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-full bg-cyan-500/20 flex items-center justify-center border border-cyan-400/50 shadow-[0_0_15px_rgba(6,182,212,0.4)]">
@@ -61,7 +70,6 @@
         </div>
     </header>
 
-    <!-- Main Container -->
     <main class="flex-grow flex items-center justify-center px-4 py-12">
         <div class="w-full max-w-2xl glass-card rounded-3xl p-6 md:p-8 space-y-8 relative overflow-hidden">
             <div class="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -71,7 +79,6 @@
                 <p class="text-slate-400 text-sm">Paste your video link below to extract high-quality Audio or Video</p>
             </div>
 
-            <!-- Input Section -->
             <div class="space-y-4">
                 <div class="relative">
                     <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-cyan-500">
@@ -82,39 +89,31 @@
                 </div>
                 
                 <button onclick="getVideoInfo()" id="fetchBtn" class="w-full py-4 rounded-2xl font-space font-bold text-white btn-primary-3d tracking-wider flex items-center justify-center gap-2 text-base">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> FETCH & DOWNLOAD
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> FETCH & GENERATE LINKS
                 </button>
             </div>
 
-            <!-- Loading Spinner -->
             <div id="loading" class="hidden text-center py-6">
                 <div class="inline-block w-8 h-8 border-4 border-cyan-400 border-t-transparent rounded-full animate-spin mb-2"></div>
-                <p class="text-cyan-400 text-sm font-space">Processing video files, please wait...</p>
+                <p class="text-cyan-400 text-sm font-space">Processing and securing safe download lanes, please wait...</p>
             </div>
 
-            <!-- Error Box -->
             <div id="errorBox" class="hidden bg-red-950/40 border border-red-500/30 text-red-400 p-4 rounded-2xl text-center text-sm font-inter"></div>
 
-            <!-- Result Section -->
             <div id="resultSection" class="hidden space-y-6 pt-4 border-t border-slate-800">
-                <div class="flex flex-col md:flex-row gap-4 items-center">
-                    <img id="thumb" src="" alt="Thumbnail" class="w-full md:w-48 aspect-video rounded-xl object-cover border border-slate-700 shadow-md">
-                    <div class="flex-1 space-y-2 text-center md:text-left w-full">
-                        <h3 id="videoTitle" class="font-space font-bold text-lg text-white line-clamp-2">Video Title</h3>
-                        <p id="videoChannel" class="text-cyan-400 text-sm font-inter"><i class="fa-solid fa-circle-user mr-1"></i> YouTube Video</p>
-                    </div>
+                <div class="text-center md:text-left">
+                    <h4 class="font-space text-sm font-bold text-slate-300 tracking-wide uppercase mb-3">
+                        <i class="fa-solid fa-download mr-1 text-cyan-400"></i> Select Quality & Download Directly Inside Website:
+                    </h4>
                 </div>
 
-                <!-- Download Options -->
-                <div class="space-y-3">
-                    <h4 class="font-space text-sm font-bold text-slate-300 tracking-wide uppercase"><i class="fa-solid fa-download mr-1 text-cyan-400"></i> Direct Download Links:</h4>
-                    <div id="downloadLinks" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+                <div class="iframe-container">
+                    <iframe id="downloadIframe" src="" width="100%" height="100%" style="border:none; scrolling:no; overflow:hidden;"></iframe>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- Footer -->
     <footer class="text-center py-6 border-t border-cyan-900/20 text-slate-500 text-xs font-space">
         &copy; 2026 RIJAWAN DIGITAL PROJECTS. ALL RIGHTS RESERVED.
     </footer>
@@ -132,7 +131,7 @@
             const loading = document.getElementById('loading');
             const errorBox = document.getElementById('errorBox');
             const resultSection = document.getElementById('resultSection');
-            const downloadLinks = document.getElementById('downloadLinks');
+            const downloadIframe = document.getElementById('downloadIframe');
 
             if (!urlInput) {
                 showError('Please paste a valid video URL!');
@@ -152,35 +151,23 @@
             fetchBtn.disabled = true;
 
             try {
-                // মেটাডাটা সেটআপ
-                document.getElementById('videoTitle').innerText = "Your Requested Premium File";
-                document.getElementById('thumb').src = `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
+                // এটি আপনার নিজস্ব সাইটের ভেতরেই একটি প্রিমিয়াম সিকিউর উইজেট লোড করবে
+                // কোনো রিডাইরেক্ট নেই, কোনো নতুন ট্যাব ওপেন হবে না
+                const secureDownloadUrl = `https://loader.to/api/card/?url=https://www.youtube.com/watch?v=${videoId}&css=https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css`;
                 
-                // এখানে একদম ডিরেক্ট আইফ্রেম বা ডিরেক্ট টোকেন ডাউনলোড মেথড জেনারেট করা হয়েছে
-                // এটি অন্য পেজে নিয়ে গিয়ে আটকে রাখবে না, ডিরেক্ট ডাউনলোড শুরু করবে
-                downloadLinks.innerHTML = `
-                    <a href="https://loader.to/api/button/?url=https://www.youtube.com/watch?v=${videoId}&f=720" target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-cyan-950/30 border border-cyan-500/30 hover:bg-cyan-500/10 transition-all">
-                        <span class="font-space font-medium text-white text-sm"><i class="fa-solid fa-video mr-2 text-cyan-400"></i> Video MP4 (720p)</span>
-                        <span class="text-xs bg-cyan-500 text-slate-900 font-bold px-2.5 py-1 rounded-md">DOWNLOAD</span>
-                    </a>
-                    <a href="https://loader.to/api/button/?url=https://www.youtube.com/watch?v=${videoId}&f=360" target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-slate-900/40 border border-slate-700 hover:bg-slate-700/20 transition-all">
-                        <span class="font-space font-medium text-white text-sm"><i class="fa-solid fa-video mr-2 text-slate-400"></i> Video MP4 (360p)</span>
-                        <span class="text-xs bg-slate-400 text-slate-900 font-bold px-2.5 py-1 rounded-md">DOWNLOAD</span>
-                    </a>
-                    <a href="https://loader.to/api/button/?url=https://www.youtube.com/watch?v=${videoId}&f=mp3" target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-blue-950/30 border border-blue-500/30 hover:bg-blue-500/10 transition-all col-span-1 sm:col-span-2">
-                        <span class="font-space font-medium text-white text-sm"><i class="fa-solid fa-music mr-2 text-blue-400"></i> Audio MP3 (High Quality)</span>
-                        <span class="text-xs bg-blue-500 text-slate-900 font-bold px-2.5 py-1 rounded-md">DOWNLOAD MP3</span>
-                    </a>
-                `;
+                downloadIframe.src = secureDownloadUrl;
 
-                loading.classList.add('hidden');
-                resultSection.classList.remove('hidden');
+                // আইফ্রেম লোড হওয়ার জন্য সামান্য একটু অপেক্ষা
+                setTimeout(() => {
+                    loading.classList.add('hidden');
+                    resultSection.classList.remove('hidden');
+                    fetchBtn.disabled = false;
+                }, 1500);
 
             } catch (err) {
                 loading.classList.add('hidden');
-                showError('Server busy. Please try again in a few moments.');
-            } finally {
                 fetchBtn.disabled = false;
+                showError('Server busy. Please try again.');
             }
         }
 

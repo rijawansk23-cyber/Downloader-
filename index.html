@@ -44,15 +44,14 @@
             transform: translateY(2px);
             box-shadow: 0 2px 5px rgba(6, 182, 212, 0.2);
         }
-        /* আইফ্রেম রেসপনসিভ ডিজাইন */
-        .iframe-container {
-            position: relative;
-            width: 100%;
-            height: 250px;
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid rgba(6, 182, 212, 0.3);
-            background: rgba(10, 14, 26, 0.5);
+        .btn-audio-3d {
+            background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transition: all 0.2s ease;
+        }
+        .btn-audio-3d:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 5px rgba(168, 85, 247, 0.2);
         }
     </style>
 </head>
@@ -88,27 +87,37 @@
                            class="w-full pl-12 pr-4 py-4 rounded-2xl bg-slate-900/80 border border-slate-700 focus:border-cyan-500 focus:outline-none text-white font-inter placeholder-slate-500 transition-all">
                 </div>
                 
-                <button onclick="getVideoInfo()" id="fetchBtn" class="w-full py-4 rounded-2xl font-space font-bold text-white btn-primary-3d tracking-wider flex items-center justify-center gap-2 text-base">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> FETCH & GENERATE LINKS
+                <button onclick="generateDownloadOptions()" id="fetchBtn" class="w-full py-4 rounded-2xl font-space font-bold text-white btn-primary-3d tracking-wider flex items-center justify-center gap-2 text-base">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> FETCH VIDEO DETAILS
                 </button>
             </div>
 
             <div id="loading" class="hidden text-center py-6">
                 <div class="inline-block w-8 h-8 border-4 border-cyan-400 border-t-transparent rounded-full animate-spin mb-2"></div>
-                <p class="text-cyan-400 text-sm font-space">Processing and securing safe download lanes, please wait...</p>
+                <p class="text-cyan-400 text-sm font-space">Analyzing link context, please wait...</p>
             </div>
 
             <div id="errorBox" class="hidden bg-red-950/40 border border-red-500/30 text-red-400 p-4 rounded-2xl text-center text-sm font-inter"></div>
 
             <div id="resultSection" class="hidden space-y-6 pt-4 border-t border-slate-800">
-                <div class="text-center md:text-left">
-                    <h4 class="font-space text-sm font-bold text-slate-300 tracking-wide uppercase mb-3">
-                        <i class="fa-solid fa-download mr-1 text-cyan-400"></i> Select Quality & Download Directly Inside Website:
-                    </h4>
+                <div class="flex flex-col sm:flex-row gap-4 items-center">
+                    <img id="thumb" src="" alt="Thumbnail" class="w-full sm:w-44 aspect-video rounded-xl object-cover border border-slate-700 shadow-md">
+                    <div class="flex-1 space-y-2 text-center sm:text-left w-full">
+                        <h3 id="videoTitle" class="font-space font-bold text-lg text-white line-clamp-2">Your Video File</h3>
+                        <p class="text-cyan-400 text-sm font-inter"><i class="fa-solid fa-circle-check mr-1"></i> Stream Link Ready</p>
+                    </div>
                 </div>
 
-                <div class="iframe-container">
-                    <iframe id="downloadIframe" src="" width="100%" height="100%" style="border:none; scrolling:no; overflow:hidden;"></iframe>
+                <div class="space-y-3">
+                    <h4 class="font-space text-sm font-bold text-slate-300 tracking-wide uppercase"><i class="fa-solid fa-download mr-1 text-cyan-400"></i> Direct Ad-Free Download:</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <button id="videoBtn" onclick="triggerDirectDownload(false)" class="btn-primary-3d py-3.5 px-5 rounded-xl font-space font-bold text-white tracking-wide text-sm flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-video text-base"></i> DOWNLOAD VIDEO (720p)
+                        </button>
+                        <button id="audioBtn" onclick="triggerDirectDownload(true)" class="btn-audio-3d py-3.5 px-5 rounded-xl font-space font-bold text-white tracking-wide text-sm flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-music text-base"></i> DOWNLOAD AUDIO (MP3)
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -125,13 +134,11 @@
             return (match && match[2].length === 11) ? match[2] : null;
         }
 
-        async function getVideoInfo() {
+        function generateDownloadOptions() {
             const urlInput = document.getElementById('videoUrl').value.trim();
-            const fetchBtn = document.getElementById('fetchBtn');
-            const loading = document.getElementById('loading');
             const errorBox = document.getElementById('errorBox');
             const resultSection = document.getElementById('resultSection');
-            const downloadIframe = document.getElementById('downloadIframe');
+            const loading = document.getElementById('loading');
 
             if (!urlInput) {
                 showError('Please paste a valid video URL!');
@@ -148,27 +155,68 @@
             errorBox.classList.add('hidden');
             resultSection.classList.add('hidden');
             loading.classList.remove('hidden');
-            fetchBtn.disabled = true;
 
-            try {
-                // এটি আপনার নিজস্ব সাইটের ভেতরেই একটি প্রিমিয়াম সিকিউর উইজেট লোড করবে
-                // কোনো রিডাইরেক্ট নেই, কোনো নতুন ট্যাব ওপেন হবে না
-                const secureDownloadUrl = `https://loader.to/api/card/?url=https://www.youtube.com/watch?v=${videoId}&css=https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css`;
-                
-                downloadIframe.src = secureDownloadUrl;
-
-                // আইফ্রেম লোড হওয়ার জন্য সামান্য একটু অপেক্ষা
-                setTimeout(() => {
-                    loading.classList.add('hidden');
-                    resultSection.classList.remove('hidden');
-                    fetchBtn.disabled = false;
-                }, 1500);
-
-            } catch (err) {
+            setTimeout(() => {
+                document.getElementById('thumb').src = `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
                 loading.classList.add('hidden');
-                fetchBtn.disabled = false;
-                showError('Server busy. Please try again.');
+                resultSection.classList.remove('hidden');
+            }, 1000);
+        }
+
+        async function triggerDirectDownload(isAudioOnly) {
+            const urlInput = document.getElementById('videoUrl').value.trim();
+            const targetBtn = isAudioOnly ? document.getElementById('audioBtn') : document.getElementById('videoBtn');
+            const originalContent = targetBtn.innerHTML;
+
+            targetBtn.disabled = true;
+            targetBtn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> GENERATING LINK...`;
+
+            // Stable open-source Cobalt API Cluster
+            const apiEndpoints = [
+                'https://api.cobalt.tools/api/json',
+                'https://cobalt.b6.is/api/json'
+            ];
+
+            let success = false;
+
+            for (let endpoint of apiEndpoints) {
+                try {
+                    const response = await fetch(endpoint, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            url: urlInput,
+                            videoQuality: '720',
+                            isAudioOnly: isAudioOnly,
+                            audioFormat: 'mp3',
+                            filenamePattern: 'classic'
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (data && data.url) {
+                        const downloadWindow = window.open(data.url, '_blank');
+                        if (!downloadWindow) {
+                            window.location.href = data.url;
+                        }
+                        success = true;
+                        break;
+                    }
+                } catch (err) {
+                    console.log(`Failed fetching from ${endpoint}, trying backup instance...`);
+                }
             }
+
+            if (!success) {
+                alert('Direct download lane is temporarily busy. Please try clicking again in a few seconds!');
+            }
+
+            targetBtn.disabled = false;
+            targetBtn.innerHTML = originalContent;
         }
 
         function showError(msg) {

@@ -35,15 +35,6 @@
             border: 1px solid rgba(6, 182, 212, 0.2);
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
-        .btn-primary-3d {
-            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
-            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            transition: all 0.2s ease;
-        }
-        .btn-primary-3d:active {
-            transform: translateY(2px);
-            box-shadow: 0 2px 5px rgba(6, 182, 212, 0.2);
-        }
         .btn-success-3d {
             background: linear-gradient(135deg, #10b981 0%, #059669 100%);
             box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
@@ -51,7 +42,6 @@
         }
         .btn-success-3d:active {
             transform: translateY(2px);
-            box-shadow: 0 2px 5px rgba(16, 185, 129, 0.2);
         }
         .btn-purple-3d {
             background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
@@ -60,7 +50,14 @@
         }
         .btn-purple-3d:active {
             transform: translateY(2px);
-            box-shadow: 0 2px 5px rgba(168, 85, 247, 0.2);
+        }
+        .btn-primary-3d {
+            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transition: all 0.2s ease;
+        }
+        .btn-primary-3d:active {
+            transform: translateY(2px);
         }
     </style>
 </head>
@@ -80,8 +77,6 @@
 
     <main class="flex-grow flex items-center justify-center px-4 py-12">
         <div class="w-full max-w-2xl glass-card rounded-3xl p-6 md:p-8 space-y-8 relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
-            
             <div class="text-center space-y-2">
                 <h2 class="font-space font-bold text-3xl md:text-4xl text-white">Premium Video Downloader</h2>
                 <p class="text-slate-400 text-sm">Paste your video link below to extract high-quality Audio or Video</p>
@@ -113,12 +108,12 @@
                     <img id="thumb" src="" alt="Thumbnail" class="w-full sm:w-44 aspect-video rounded-xl object-cover border border-slate-700 shadow-md">
                     <div class="flex-1 space-y-2 text-center sm:text-left w-full">
                         <h3 id="videoTitle" class="font-space font-bold text-lg text-white line-clamp-2">Your Video File</h3>
-                        <p class="text-emerald-400 text-sm font-inter"><i class="fa-solid fa-circle-check mr-1"></i> Direct Link Ready (Ad-Free)</p>
+                        <p class="text-emerald-400 text-sm font-inter"><i class="fa-solid fa-circle-check mr-1"></i> Direct Link Ready</p>
                     </div>
                 </div>
 
                 <div class="space-y-3">
-                    <h4 class="font-space text-sm font-bold text-slate-300 tracking-wide uppercase"><i class="fa-solid fa-download mr-1 text-cyan-400"></i> Direct Servers (No Ads / No Redirects):</h4>
+                    <h4 class="font-space text-sm font-bold text-slate-300 tracking-wide uppercase"><i class="fa-solid fa-download mr-1 text-cyan-400"></i> Direct Servers (No Ads):</h4>
                     
                     <div class="grid grid-cols-1 gap-3">
                         <a id="server1Btn" href="#" target="_blank" class="w-full btn-success-3d py-3.5 px-5 rounded-xl font-space font-bold text-white tracking-wide text-sm flex items-center justify-between">
@@ -137,14 +132,10 @@
                         </a>
 
                         <a id="audioBtn" href="#" target="_blank" class="w-full btn-purple-3d py-3.5 px-5 rounded-xl font-space font-bold text-white tracking-wide text-sm flex items-center justify-between">
-                            <span><i class="fa-solid fa-music mr-2"></i> DOWNLOAD AUDIO (High Quality MP3/M4A)</span>
+                            <span><i class="fa-solid fa-music mr-2"></i> DOWNLOAD AUDIO (MP3/M4A)</span>
                             <span class="bg-black/20 text-xs px-2 py-0.5 rounded">AUDIO</span>
                         </a>
                     </div>
-                    
-                    <p class="text-xs text-slate-500 text-center mt-3 font-inter px-2">
-                        💡 <b>পাস ট্রিক:</b> লিংকে ক্লিক করার পর যদি ভিডিওটি ডাউনলোড না হয়ে ব্রাউজারে প্লে হওয়া শুরু করে, তবে চিন্তার কিছু নেই! ভিডিও প্লেয়ারের নিচে ডান কোনায় থাকা <b>থ্রি-ডট (⋮)</b> মেনুতে ক্লিক করে জাস্ট <b>Download</b> বাটনে আলতো চাপ দিন, সরাসরি গ্যালারিতে সেভ হয়ে যাবে।
-                    </p>
                 </div>
             </div>
         </div>
@@ -184,11 +175,9 @@
             loading.classList.remove('hidden');
 
             setTimeout(() => {
-                // থাম্বনেইল লোড
                 document.getElementById('thumb').src = `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
                 
-                // ওয়ান-ক্লিক ডিরেক্ট ওপেন সোর্স সোর্স ম্যাপিং
-                // 22 = 720p HD, 18 = 360p, 140 = High Quality Audio
+                // Direct Link Mapping - NO JavaScript Fetching, NO popups!
                 document.getElementById('server1Btn').href = `https://yewtu.be/latest_version?id=${videoId}&itag=22`;
                 document.getElementById('server2Btn').href = `https://inv.nadeko.net/latest_version?id=${videoId}&itag=22`;
                 document.getElementById('server3Btn').href = `https://yewtu.be/latest_version?id=${videoId}&itag=18`;

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="bn" class="scroll-smooth">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>আরিফুল ডাউনলোডার (ARIFUL DOWNLOADER)</title>
+    <title>Rijawan ai - Premium Downloader</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -23,7 +23,7 @@
     <style>
         body {
             background: radial-gradient(circle at center, #0d1117 0%, #0a0e1a 100%);
-            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', sans-serif;
         }
         .neon-glow {
             text-shadow: 0 0 10px rgba(6, 182, 212, 0.7), 0 0 20px rgba(6, 182, 212, 0.5);
@@ -53,10 +53,10 @@
             <div class="w-10 h-10 rounded-full bg-cyan-500/20 flex items-center justify-center border border-cyan-400/50 shadow-[0_0_15px_rgba(6,182,212,0.4)]">
                 <i class="fa-solid fa-bolt text-cyan-400 text-xl animate-pulse"></i>
             </div>
-            <span class="font-space font-bold text-2xl tracking-wide bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent neon-glow">ARIFUL DOWNLOADER</span>
+            <span class="font-space font-bold text-2xl tracking-wide bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent neon-glow">Rijawan ai</span>
         </div>
         <div class="text-xs font-space px-3 py-1.5 rounded-full bg-cyan-900/40 border border-cyan-500/30 text-cyan-400 font-bold">
-            প্রো ভার্সন (PRO)
+            PRO VERSION
         </div>
     </header>
 
@@ -65,8 +65,8 @@
             <div class="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
             
             <div class="text-center space-y-2">
-                <h2 class="font-space font-bold text-3xl md:text-4xl text-white">প্রিমিয়াম ভিডিও ডাউনলোডার</h2>
-                <p class="text-slate-400 text-sm">ইউটিউব বা অন্যান্য লিংক পেস্ট করে অডিও অথবা ভিডিও ডাউনলোড করুন</p>
+                <h2 class="font-space font-bold text-3xl md:text-4xl text-white">Premium Video Downloader</h2>
+                <p class="text-slate-400 text-sm">Paste your video link below to extract high-quality Audio or Video</p>
             </div>
 
             <div class="space-y-4">
@@ -74,52 +74,54 @@
                     <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-cyan-500">
                         <i class="fa-solid fa-link text-lg"></i>
                     </span>
-                    <input type="url" id="videoUrl" placeholder="এখানে ভিডিওর লিংকটি পেস্ট করুন..." 
+                    <input type="url" id="videoUrl" placeholder="Paste video URL here..." 
                            class="w-full pl-12 pr-4 py-4 rounded-2xl bg-slate-900/80 border border-slate-700 focus:border-cyan-500 focus:outline-none text-white font-inter placeholder-slate-500 transition-all">
                 </div>
                 
                 <button onclick="getVideoInfo()" id="fetchBtn" class="w-full py-4 rounded-2xl font-space font-bold text-white btn-primary-3d tracking-wider flex items-center justify-center gap-2 text-base">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> লিংক থেকে তথ্য খুঁজুন ও ডাউনলোড করুন
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> FETCH & DOWNLOAD
                 </button>
             </div>
 
             <div id="loading" class="hidden text-center py-6">
                 <div class="inline-block w-8 h-8 border-4 border-cyan-400 border-t-transparent rounded-full animate-spin mb-2"></div>
-                <p class="text-cyan-400 text-sm font-space">ভিডিওর তথ্য খোঁজা হচ্ছে, দয়া করে একটু অপেক্ষা করুন...</p>
+                <p class="text-cyan-400 text-sm font-space">Fetching video data, please wait...</p>
             </div>
 
             <div id="errorBox" class="hidden bg-red-950/40 border border-red-500/30 text-red-400 p-4 rounded-2xl text-center text-sm font-inter"></div>
 
             <div id="resultSection" class="hidden space-y-6 pt-4 border-t border-slate-800">
                 <div class="flex flex-col md:flex-row gap-4 items-center">
-                    <img id="thumb" src="" alt="থাম্বনেইল" class="w-full md:w-48 aspect-video rounded-xl object-cover border border-slate-700 shadow-md">
+                    <img id="thumb" src="" alt="Thumbnail" class="w-full md:w-48 aspect-video rounded-xl object-cover border border-slate-700 shadow-md">
                     <div class="flex-1 space-y-2 text-center md:text-left w-full">
-                        <h3 id="videoTitle" class="font-space font-bold text-lg text-white line-clamp-2">ভিডিওর নাম এখানে দেখাবে</h3>
-                        <p id="videoChannel" class="text-cyan-400 text-sm font-inter"><i class="fa-solid fa-circle-user mr-1"></i> চ্যানেলের নাম</p>
-                        <p id="videoDuration" class="text-slate-400 text-xs font-inter"><i class="fa-solid fa-clock mr-1"></i> ভিডিওর সময়: --:--</p>
+                        <h3 id="videoTitle" class="font-space font-bold text-lg text-white line-clamp-2">Video Title</h3>
+                        <p id="videoChannel" class="text-cyan-400 text-sm font-inter"><i class="fa-solid fa-circle-user mr-1"></i> YouTube Video</p>
                     </div>
                 </div>
 
                 <div class="space-y-3">
-                    <h4 class="font-space text-sm font-bold text-slate-300 tracking-wide uppercase"><i class="fa-solid fa-download mr-1 text-cyan-400"></i> ডাউনলোডের অপশন সমূহ:</h4>
-                    <div id="downloadLinks" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        </div>
+                    <h4 class="font-space text-sm font-bold text-slate-300 tracking-wide uppercase"><i class="fa-solid fa-download mr-1 text-cyan-400"></i> Available Formats:</h4>
+                    <div id="downloadLinks" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
                 </div>
             </div>
         </div>
     </main>
 
     <footer class="text-center py-6 border-t border-cyan-900/20 text-slate-500 text-xs font-space">
-        &copy; ২০২৬ আরিফুল ডিজিটাল প্রজেক্টস (ARIFUL DIGITAL PROJECTS)। সর্বস্বত্ব সংরক্ষিত।
+        &copy; 2026 RIJAWAN DIGITAL PROJECTS. ALL RIGHTS RESERVED.
     </footer>
 
     <script>
-        // আপনার গোপন RapidAPI Key নিচে দেওয়া আছে
-        const API_KEY = '33da7c3abamsh3d0317250c51813p1d3631jsn5bcf2292ba2d'; 
-        const API_HOST = 'youtube-mp3-audio-video-downloader.p.rapidapi.com';
+        function cleanYoutubeUrl(url) {
+            if (url.includes('youtu.be/')) {
+                const id = url.split('youtu.be/')[1].split(/[?#]/)[0];
+                return `https://www.youtube.com/watch?v=${id}`;
+            }
+            return url;
+        }
 
         async function getVideoInfo() {
-            const urlInput = document.getElementById('videoUrl').value.trim();
+            let urlInput = document.getElementById('videoUrl').value.trim();
             const fetchBtn = document.getElementById('fetchBtn');
             const loading = document.getElementById('loading');
             const errorBox = document.getElementById('errorBox');
@@ -127,68 +129,81 @@
             const downloadLinks = document.getElementById('downloadLinks');
 
             if (!urlInput) {
-                showError('দয়া করে একটি সঠিক ইউটিউব ভিডিওর লিংক পেস্ট করুন!');
+                showError('Please paste a valid video URL!');
                 return;
             }
 
-            // রিসেট UI
+            urlInput = cleanYoutubeUrl(urlInput);
+
             errorBox.classList.add('hidden');
             resultSection.classList.add('hidden');
             loading.classList.remove('hidden');
             fetchBtn.disabled = true;
 
+            // Method 1: Gateway Server
             try {
+                const videoId = urlInput.match(/(?:https?:\/\/(?:www\.)?youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/)?.[1];
+                if (videoId) {
+                    document.getElementById('videoTitle').innerText = "YouTube Premium Video";
+                    document.getElementById('thumb').src = `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
+                    
+                    downloadLinks.innerHTML = `
+                        <a href="https://api.vewd.cc/v1/download/video?url=${encodeURIComponent(urlInput)}" target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-cyan-950/30 border border-cyan-500/30 hover:bg-cyan-500/10 transition-all">
+                            <span class="font-space font-medium text-white text-sm"><i class="fa-solid fa-video mr-2 text-cyan-400"></i> Video MP4 (Best Quality)</span>
+                            <span class="text-xs bg-cyan-500 text-slate-900 font-bold px-2.5 py-1 rounded-md tracking-wider">DOWNLOAD</span>
+                        </a>
+                        <a href="https://api.vewd.cc/v1/download/audio?url=${encodeURIComponent(urlInput)}" target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-blue-950/30 border border-blue-500/30 hover:bg-blue-500/10 transition-all">
+                            <span class="font-space font-medium text-white text-sm"><i class="fa-solid fa-music mr-2 text-blue-400"></i> Audio MP3 (Audio)</span>
+                            <span class="text-xs bg-blue-500 text-slate-900 font-bold px-2.5 py-1 rounded-md tracking-wider">DOWNLOAD</span>
+                        </a>
+                    `;
+                    loading.classList.add('hidden');
+                    resultSection.classList.remove('hidden');
+                    return;
+                }
+            } catch (e) {
+                console.log("Method 1 failed, trying RapidAPI...");
+            }
+
+            // Method 2: Backup RapidAPI
+            try {
+                const API_KEY = '33da7c3abamsh3d0317250c51813p1d3631jsn5bcf2292ba2d'; 
+                const API_HOST = 'youtube-mp3-audio-video-downloader.p.rapidapi.com';
                 const apiUrl = `https://${API_HOST}/api/video/info?url=${encodeURIComponent(urlInput)}`;
                 
                 const response = await fetch(apiUrl, {
                     method: 'GET',
-                    headers: {
-                        'X-RapidAPI-Key': API_KEY,
-                        'X-RapidAPI-Host': API_HOST
-                    }
+                    headers: { 'X-RapidAPI-Key': API_KEY, 'X-RapidAPI-Host': API_HOST }
                 });
-
                 const data = await response.json();
 
                 if (!response.ok || data.status === 'fail' || !data.title) {
-                    throw new Error(data.msg || 'ভিডিওর কোনো তথ্য পাওয়া যায়নি। লিংকটি আবার চেক করে চেষ্টা করুন।');
+                    throw new Error();
                 }
 
-                // মেটাডাটা সেট করা
                 document.getElementById('videoTitle').innerText = data.title;
-                document.getElementById('videoChannel').innerText = data.author || 'ইউটিউব চ্যানেল';
-                document.getElementById('videoDuration').innerText = `ভিডিওর সময়: ${data.lengthText || 'জানা যায়নি'}`;
-                document.getElementById('thumb').src = data.thumbnail || 'https://via.placeholder.com/180x101?text=No+Image';
-
-                // ডাউনলোড বাটন ক্লিয়ার করে নতুন করে তৈরি
+                document.getElementById('thumb').src = data.thumbnail || `https://img.youtube.com/vi/${urlInput.split('v=')[1]}/mqdefault.jpg`;
                 downloadLinks.innerHTML = '';
 
-                // ভিডিও ডাউনলোড বাটন (MP4)
                 if (data.videoUrl) {
                     downloadLinks.innerHTML += `
                         <a href="${data.videoUrl}" target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-cyan-950/30 border border-cyan-500/30 hover:bg-cyan-500/10 transition-all">
-                            <span class="font-space font-medium text-white text-sm"><i class="fa-solid fa-video mr-2 text-cyan-400"></i> ভিডিও MP4 (সেরা কোয়ালিটি)</span>
-                            <span class="text-xs bg-cyan-500 text-slate-900 font-bold px-2.5 py-1 rounded-md tracking-wider">ডাউনলোড</span>
-                        </a>
-                    `;
+                            <span class="font-space font-medium text-white text-sm"><i class="fa-solid fa-video mr-2 text-cyan-400"></i> Video MP4</span>
+                            <span class="text-xs bg-cyan-500 text-slate-900 font-bold px-2.5 py-1 rounded-md">DOWNLOAD</span>
+                        </a>`;
                 }
-
-                // অডিও ডাউনলোড বাটন (MP3)
                 if (data.audioUrl) {
                     downloadLinks.innerHTML += `
                         <a href="${data.audioUrl}" target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-blue-950/30 border border-blue-500/30 hover:bg-blue-500/10 transition-all">
-                            <span class="font-space font-medium text-white text-sm"><i class="fa-solid fa-music mr-2 text-blue-400"></i> অডিও MP3 (গান)</span>
-                            <span class="text-xs bg-blue-500 text-slate-900 font-bold px-2.5 py-1 rounded-md tracking-wider">ডাউনলোড</span>
-                        </a>
-                    `;
+                            <span class="font-space font-medium text-white text-sm"><i class="fa-solid fa-music mr-2 text-blue-400"></i> Audio MP3</span>
+                            <span class="text-xs bg-blue-500 text-slate-900 font-bold px-2.5 py-1 rounded-md">DOWNLOAD</span>
+                        </a>`;
                 }
-
                 loading.classList.add('hidden');
                 resultSection.classList.remove('hidden');
-
             } catch (err) {
                 loading.classList.add('hidden');
-                showError(err.message || 'সার্ভারের সাথে সংযোগ করা যাচ্ছে না। দয়া করে একটু পর আবার চেষ্টা করুন!');
+                showError('Unable to fetch video details. Please try another link!');
             } finally {
                 fetchBtn.disabled = false;
             }

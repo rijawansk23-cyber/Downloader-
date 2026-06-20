@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rijawan ai - Premium Downloader</title>
+    <title>Ariful Downloader - Premium AI Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -35,30 +35,26 @@
             border: 1px solid rgba(6, 182, 212, 0.2);
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
-        .btn-success-3d {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            transition: all 0.2s ease;
-        }
-        .btn-success-3d:active {
-            transform: translateY(2px);
-        }
-        .btn-purple-3d {
-            background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
-            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            transition: all 0.2s ease;
-        }
-        .btn-purple-3d:active {
-            transform: translateY(2px);
-        }
         .btn-primary-3d {
             background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
             box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
             transition: all 0.2s ease;
         }
-        .btn-primary-3d:active {
-            transform: translateY(2px);
+        .btn-primary-3d:active { transform: translateY(2px); }
+        
+        .btn-success-3d {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transition: all 0.2s ease;
         }
+        .btn-success-3d:active { transform: translateY(2px); }
+
+        .btn-purple-3d {
+            background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transition: all 0.2s ease;
+        }
+        .btn-purple-3d:active { transform: translateY(2px); }
     </style>
 </head>
 <body class="text-slate-200 min-h-screen flex flex-col justify-between">
@@ -68,7 +64,7 @@
             <div class="w-10 h-10 rounded-full bg-cyan-500/20 flex items-center justify-center border border-cyan-400/50 shadow-[0_0_15px_rgba(6,182,212,0.4)]">
                 <i class="fa-solid fa-bolt text-cyan-400 text-xl animate-pulse"></i>
             </div>
-            <span class="font-space font-bold text-2xl tracking-wide bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent neon-glow">Rijawan ai</span>
+            <span class="font-space font-bold text-2xl tracking-wide bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent neon-glow">Ariful Downloader</span>
         </div>
         <div class="text-xs font-space px-3 py-1.5 rounded-full bg-cyan-900/40 border border-cyan-500/30 text-cyan-400 font-bold">
             PRO VERSION
@@ -77,9 +73,10 @@
 
     <main class="flex-grow flex items-center justify-center px-4 py-12">
         <div class="w-full max-w-2xl glass-card rounded-3xl p-6 md:p-8 space-y-8 relative overflow-hidden">
+            
             <div class="text-center space-y-2">
-                <h2 class="font-space font-bold text-3xl md:text-4xl text-white">Premium Video Downloader</h2>
-                <p class="text-slate-400 text-sm">Paste your video link below to extract high-quality Audio or Video</p>
+                <h2 class="font-space font-bold text-3xl md:text-4xl text-white">প্রিমিয়াম ভিডিও ডাউনলোডার</h2>
+                <p class="text-slate-400 text-sm">ইউটিউব বা অন্যান্য লিংক পেস্ট করে অডিও অথবা ভিডিও ডাউনলোড করুন</p>
             </div>
 
             <div class="space-y-4">
@@ -87,18 +84,18 @@
                     <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-cyan-500">
                         <i class="fa-solid fa-link text-lg"></i>
                     </span>
-                    <input type="url" id="videoUrl" placeholder="Paste video URL here..." 
+                    <input type="url" id="videoUrl" placeholder="এখানে আপনার লিংকটি পেস্ট করুন..." 
                            class="w-full pl-12 pr-4 py-4 rounded-2xl bg-slate-900/80 border border-slate-700 focus:border-cyan-500 focus:outline-none text-white font-inter placeholder-slate-500 transition-all">
                 </div>
                 
                 <button onclick="generateDownloadOptions()" id="fetchBtn" class="w-full py-4 rounded-2xl font-space font-bold text-white btn-primary-3d tracking-wider flex items-center justify-center gap-2 text-base">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> FETCH VIDEO DETAILS
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> লিংক থেকে তথ্য খুঁজুন ও ডাউনলোড করুন
                 </button>
             </div>
 
             <div id="loading" class="hidden text-center py-6">
                 <div class="inline-block w-8 h-8 border-4 border-cyan-400 border-t-transparent rounded-full animate-spin mb-2"></div>
-                <p class="text-cyan-400 text-sm font-space">Generating clean download streams...</p>
+                <p class="text-cyan-400 text-sm font-space">ভিডিওর উৎস অনুসন্ধান করা হচ্ছে...</p>
             </div>
 
             <div id="errorBox" class="hidden bg-red-950/40 border border-red-500/30 text-red-400 p-4 rounded-2xl text-center text-sm font-inter"></div>
@@ -107,34 +104,29 @@
                 <div class="flex flex-col sm:flex-row gap-4 items-center">
                     <img id="thumb" src="" alt="Thumbnail" class="w-full sm:w-44 aspect-video rounded-xl object-cover border border-slate-700 shadow-md">
                     <div class="flex-1 space-y-2 text-center sm:text-left w-full">
-                        <h3 id="videoTitle" class="font-space font-bold text-lg text-white line-clamp-2">Your Video File</h3>
-                        <p class="text-emerald-400 text-sm font-inter"><i class="fa-solid fa-circle-check mr-1"></i> Direct Link Ready</p>
+                        <h3 class="font-space font-bold text-lg text-white line-clamp-2">Your Requested Video</h3>
+                        <p class="text-emerald-400 text-sm font-inter"><i class="fa-solid fa-circle-check mr-1"></i> Stream Link Ready</p>
                     </div>
                 </div>
 
                 <div class="space-y-3">
-                    <h4 class="font-space text-sm font-bold text-slate-300 tracking-wide uppercase"><i class="fa-solid fa-download mr-1 text-cyan-400"></i> Direct Servers (No Ads):</h4>
+                    <h4 class="font-space text-sm font-bold text-slate-300 tracking-wide uppercase"><i class="fa-solid fa-cloud-arrow-down mr-1 text-cyan-400"></i> Cloud High-Speed Download:</h4>
                     
                     <div class="grid grid-cols-1 gap-3">
-                        <a id="server1Btn" href="#" target="_blank" class="w-full btn-success-3d py-3.5 px-5 rounded-xl font-space font-bold text-white tracking-wide text-sm flex items-center justify-between">
-                            <span><i class="fa-solid fa-video mr-2"></i> DOWNLOAD VIDEO (720p HD - Server 1)</span>
-                            <span class="bg-black/20 text-xs px-2 py-0.5 rounded">FAST</span>
-                        </a>
+                        <button id="video720Btn" onclick="triggerDownload('video', '720', 'video720Btn')" class="w-full btn-success-3d py-3.5 px-5 rounded-xl font-space font-bold text-white tracking-wide text-sm flex items-center justify-between">
+                            <span id="video720BtnText"><i class="fa-solid fa-video mr-2"></i> DOWNLOAD VIDEO (720p HD)</span>
+                            <span class="bg-black/20 text-xs px-2 py-0.5 rounded">HIGH QUALITY</span>
+                        </button>
                         
-                        <a id="server2Btn" href="#" target="_blank" class="w-full bg-slate-800 border border-slate-700 hover:bg-slate-700/50 py-3.5 px-5 rounded-xl font-space font-bold text-white tracking-wide text-sm flex items-center justify-between transition-all">
-                            <span><i class="fa-solid fa-video mr-2 text-cyan-400"></i> DOWNLOAD VIDEO (720p HD - Server 2)</span>
-                            <span class="bg-slate-900 text-xs text-slate-400 px-2 py-0.5 rounded">BACKUP</span>
-                        </a>
-
-                        <a id="server3Btn" href="#" target="_blank" class="w-full bg-slate-800 border border-slate-700 hover:bg-slate-700/50 py-3.5 px-5 rounded-xl font-space font-bold text-white tracking-wide text-sm flex items-center justify-between transition-all">
-                            <span><i class="fa-solid fa-mobile-button mr-2 text-cyan-400"></i> DOWNLOAD VIDEO (360p - Low Data)</span>
+                        <button id="video360Btn" onclick="triggerDownload('video', '360', 'video360Btn')" class="w-full bg-slate-800 border border-slate-700 hover:bg-slate-700/50 py-3.5 px-5 rounded-xl font-space font-bold text-white tracking-wide text-sm flex items-center justify-between transition-all">
+                            <span id="video360BtnText"><i class="fa-solid fa-mobile-button mr-2 text-cyan-400"></i> DOWNLOAD VIDEO (360p Low Data)</span>
                             <span class="bg-slate-900 text-xs text-slate-400 px-2 py-0.5 rounded">360P</span>
-                        </a>
+                        </button>
 
-                        <a id="audioBtn" href="#" target="_blank" class="w-full btn-purple-3d py-3.5 px-5 rounded-xl font-space font-bold text-white tracking-wide text-sm flex items-center justify-between">
-                            <span><i class="fa-solid fa-music mr-2"></i> DOWNLOAD AUDIO (MP3/M4A)</span>
+                        <button id="audioBtn" onclick="triggerDownload('audio', 'best', 'audioBtn')" class="w-full btn-purple-3d py-3.5 px-5 rounded-xl font-space font-bold text-white tracking-wide text-sm flex items-center justify-between">
+                            <span id="audioBtnText"><i class="fa-solid fa-music mr-2"></i> DOWNLOAD AUDIO (Premium MP3)</span>
                             <span class="bg-black/20 text-xs px-2 py-0.5 rounded">AUDIO</span>
-                        </a>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -142,10 +134,20 @@
     </main>
 
     <footer class="text-center py-6 border-t border-cyan-900/20 text-slate-500 text-xs font-space">
-        &copy; 2026 RIJAWAN DIGITAL PROJECTS. ALL RIGHTS RESERVED.
+        &copy; 2026 আরিফুল ডিজিটাল প্রজেক্টস (ARIFUL DIGITAL PROJECTS)। সর্বস্বত্ব সংরক্ষিত।
     </footer>
 
     <script>
+        // একাধিক সুপার-ফাস্ট গ্লোবাল কোবাল্ট এপিআই মিরর (সার্ভার রোটেশন জাদুকরী ট্রিক)
+        const COBALT_SERVERS = [
+            'https://api.cobalt.tools',
+            'https://api.hyper.lol',
+            'https://cobalt.internal.ooo',
+            'https://api.smoothier.com/cobalt'
+        ];
+
+        let globalVideoUrl = "";
+
         function extractVideoId(url) {
             const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
             const match = url.match(regExp);
@@ -159,33 +161,83 @@
             const loading = document.getElementById('loading');
 
             if (!urlInput) {
-                showError('Please paste a valid video URL!');
+                showError('দয়া করে একটি সঠিক ভিডিও লিংক পেস্ট করুন!');
                 return;
             }
 
             const videoId = extractVideoId(urlInput);
-
             if (!videoId) {
-                showError('Could not recognize this YouTube Link. Try copying again!');
+                showError('ইউটিউব লিংকটি চেনা যায়নি। আবার কপি করে চেষ্টা করুন!');
                 return;
             }
 
+            globalVideoUrl = urlInput;
             errorBox.classList.add('hidden');
             resultSection.classList.add('hidden');
             loading.classList.remove('hidden');
 
             setTimeout(() => {
                 document.getElementById('thumb').src = `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
-                
-                // Direct Link Mapping - NO JavaScript Fetching, NO popups!
-                document.getElementById('server1Btn').href = `https://yewtu.be/latest_version?id=${videoId}&itag=22`;
-                document.getElementById('server2Btn').href = `https://inv.nadeko.net/latest_version?id=${videoId}&itag=22`;
-                document.getElementById('server3Btn').href = `https://yewtu.be/latest_version?id=${videoId}&itag=18`;
-                document.getElementById('audioBtn').href = `https://yewtu.be/latest_version?id=${videoId}&itag=140`;
-
                 loading.classList.add('hidden');
                 resultSection.classList.remove('hidden');
-            }, 500);
+            }, 600);
+        }
+
+        // স্মার্ট অটো-ফেলওভার ফাংশন: ব্যাকগ্রাউন্ডে একটার পর একটা সার্ভার ট্রাই করবে
+        async function triggerDownload(mode, quality, buttonId) {
+            const btnTextSpan = document.getElementById(buttonId + 'Text');
+            const originalText = btnTextSpan.innerHTML;
+            
+            // বাটন লোডিং স্টেট সেট করা
+            btnTextSpan.innerHTML = `<i class="fa-solid fa-spinner animate-spin mr-2"></i> CONNECTING TO SECURE CLOUD...`;
+            
+            let downloadUrl = null;
+            let currentServerIndex = 0;
+
+            // ৪টি সার্ভার ব্যাকগ্রাউন্ডে লুপ চালিয়ে চেক করবে
+            while (currentServerIndex < COBALT_SERVERS.length) {
+                const currentServer = COBALT_SERVERS[currentServerIndex];
+                btnTextSpan.innerHTML = `<i class="fa-solid fa-spinner animate-spin mr-2"></i> TUNNELING VIA SERVER ${currentServerIndex + 1}...`;
+                
+                try {
+                    const response = await fetch(`${currentServer}/api/json`, {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            url: globalVideoUrl,
+                            videoQuality: quality,
+                            downloadMode: mode,
+                            audioFormat: 'mp3',
+                            filenamePattern: 'classic'
+                        })
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data && data.url) {
+                            downloadUrl = data.url;
+                            break; // লিংক পেয়ে গেলে লুপ থেকে বের হয়ে যাবে
+                        }
+                    }
+                } catch (e) {
+                    console.log(`Server ${currentServerIndex + 1} failed, trying next...`);
+                }
+                
+                currentServerIndex++; // ১ম সার্ভার ফেইল করলে স্বয়ংক্রিয়ভাবে ২য় টায় জাম্প করবে
+            }
+
+            // বাটন টেক্সট আগের অবস্থায় ফিরিয়ে আনা
+            btnTextSpan.innerHTML = originalText;
+
+            if (downloadUrl) {
+                // কোনো রিডাইরেক্ট বা বিজ্ঞাপনের ঝামেলা ছাড়াই সরাসরি ফাইলটি নতুন ট্যাবে ওপেন হবে এবং ডাউনলোড শুরু হবে
+                window.open(downloadUrl, '_blank');
+            } else {
+                alert('দুঃখিত, এই মুহূর্তে সবকটি ক্লাউড লাইন ব্যস্ত আছে। দয়া করে কয়েক সেকেন্ড পর আবার চেষ্টা করুন!');
+            }
         }
 
         function showError(msg) {

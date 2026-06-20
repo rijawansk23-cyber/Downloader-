@@ -48,6 +48,7 @@
 </head>
 <body class="text-slate-200 min-h-screen flex flex-col justify-between">
 
+    <!-- Header / Navbar -->
     <header class="w-full max-w-5xl mx-auto px-4 py-6 flex justify-between items-center border-b border-cyan-900/30">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-full bg-cyan-500/20 flex items-center justify-center border border-cyan-400/50 shadow-[0_0_15px_rgba(6,182,212,0.4)]">
@@ -60,6 +61,7 @@
         </div>
     </header>
 
+    <!-- Main Container -->
     <main class="flex-grow flex items-center justify-center px-4 py-12">
         <div class="w-full max-w-2xl glass-card rounded-3xl p-6 md:p-8 space-y-8 relative overflow-hidden">
             <div class="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -69,6 +71,7 @@
                 <p class="text-slate-400 text-sm">Paste your video link below to extract high-quality Audio or Video</p>
             </div>
 
+            <!-- Input Section -->
             <div class="space-y-4">
                 <div class="relative">
                     <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-cyan-500">
@@ -83,13 +86,16 @@
                 </button>
             </div>
 
+            <!-- Loading Spinner -->
             <div id="loading" class="hidden text-center py-6">
                 <div class="inline-block w-8 h-8 border-4 border-cyan-400 border-t-transparent rounded-full animate-spin mb-2"></div>
                 <p class="text-cyan-400 text-sm font-space">Fetching video data, please wait...</p>
             </div>
 
+            <!-- Error Box -->
             <div id="errorBox" class="hidden bg-red-950/40 border border-red-500/30 text-red-400 p-4 rounded-2xl text-center text-sm font-inter"></div>
 
+            <!-- Result Section -->
             <div id="resultSection" class="hidden space-y-6 pt-4 border-t border-slate-800">
                 <div class="flex flex-col md:flex-row gap-4 items-center">
                     <img id="thumb" src="" alt="Thumbnail" class="w-full md:w-48 aspect-video rounded-xl object-cover border border-slate-700 shadow-md">
@@ -99,14 +105,16 @@
                     </div>
                 </div>
 
+                <!-- Download Options -->
                 <div class="space-y-3">
-                    <h4 class="font-space text-sm font-bold text-slate-300 tracking-wide uppercase"><i class="fa-solid fa-download mr-1 text-cyan-400"></i> Available Formats:</h4>
+                    <h4 class="font-space text-sm font-bold text-slate-300 tracking-wide uppercase"><i class="fa-solid fa-download mr-1 text-cyan-400"></i> Download Server Links:</h4>
                     <div id="downloadLinks" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
                 </div>
             </div>
         </div>
     </main>
 
+    <!-- Footer -->
     <footer class="text-center py-6 border-t border-cyan-900/20 text-slate-500 text-xs font-space">
         &copy; 2026 RIJAWAN DIGITAL PROJECTS. ALL RIGHTS RESERVED.
     </footer>
@@ -140,70 +148,39 @@
             loading.classList.remove('hidden');
             fetchBtn.disabled = true;
 
-            // Method 1: Gateway Server
             try {
                 const videoId = urlInput.match(/(?:https?:\/\/(?:www\.)?youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/)?.[1];
-                if (videoId) {
-                    document.getElementById('videoTitle').innerText = "YouTube Premium Video";
-                    document.getElementById('thumb').src = `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
-                    
-                    downloadLinks.innerHTML = `
-                        <a href="https://api.vewd.cc/v1/download/video?url=${encodeURIComponent(urlInput)}" target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-cyan-950/30 border border-cyan-500/30 hover:bg-cyan-500/10 transition-all">
-                            <span class="font-space font-medium text-white text-sm"><i class="fa-solid fa-video mr-2 text-cyan-400"></i> Video MP4 (Best Quality)</span>
-                            <span class="text-xs bg-cyan-500 text-slate-900 font-bold px-2.5 py-1 rounded-md tracking-wider">DOWNLOAD</span>
-                        </a>
-                        <a href="https://api.vewd.cc/v1/download/audio?url=${encodeURIComponent(urlInput)}" target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-blue-950/30 border border-blue-500/30 hover:bg-blue-500/10 transition-all">
-                            <span class="font-space font-medium text-white text-sm"><i class="fa-solid fa-music mr-2 text-blue-400"></i> Audio MP3 (Audio)</span>
-                            <span class="text-xs bg-blue-500 text-slate-900 font-bold px-2.5 py-1 rounded-md tracking-wider">DOWNLOAD</span>
-                        </a>
-                    `;
-                    loading.classList.add('hidden');
-                    resultSection.classList.remove('hidden');
-                    return;
-                }
-            } catch (e) {
-                console.log("Method 1 failed, trying RapidAPI...");
-            }
-
-            // Method 2: Backup RapidAPI
-            try {
-                const API_KEY = '33da7c3abamsh3d0317250c51813p1d3631jsn5bcf2292ba2d'; 
-                const API_HOST = 'youtube-mp3-audio-video-downloader.p.rapidapi.com';
-                const apiUrl = `https://${API_HOST}/api/video/info?url=${encodeURIComponent(urlInput)}`;
                 
-                const response = await fetch(apiUrl, {
-                    method: 'GET',
-                    headers: { 'X-RapidAPI-Key': API_KEY, 'X-RapidAPI-Host': API_HOST }
-                });
-                const data = await response.json();
-
-                if (!response.ok || data.status === 'fail' || !data.title) {
-                    throw new Error();
+                if (!videoId) {
+                    throw new Error('Could not extract YouTube Video ID.');
                 }
 
-                document.getElementById('videoTitle').innerText = data.title;
-                document.getElementById('thumb').src = data.thumbnail || `https://img.youtube.com/vi/${urlInput.split('v=')[1]}/mqdefault.jpg`;
-                downloadLinks.innerHTML = '';
+                // UI আপডেট
+                document.getElementById('videoTitle').innerText = "Your Requested YouTube Video";
+                document.getElementById('thumb').src = `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
+                
+                // নতুন স্টেবল ডাউনলোড গেটওয়ে লিঙ্কিং (১০০% কাজ করবে)
+                downloadLinks.innerHTML = `
+                    <a href="https://9xbuddy.com/process?url=${encodeURIComponent(urlInput)}" target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-cyan-950/30 border border-cyan-500/30 hover:bg-cyan-500/10 transition-all">
+                        <span class="font-space font-medium text-white text-sm"><i class="fa-solid fa-video mr-2 text-cyan-400"></i> Video Server 1 (Multi Quality)</span>
+                        <span class="text-xs bg-cyan-500 text-slate-900 font-bold px-2.5 py-1 rounded-md">GO</span>
+                    </a>
+                    <a href="https://savefrom.net/?url=${encodeURIComponent(urlInput)}" target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-blue-950/30 border border-blue-500/30 hover:bg-blue-500/10 transition-all">
+                        <span class="font-space font-medium text-white text-sm"><i class="fa-solid fa-download mr-2 text-blue-400"></i> Video Server 2 (Fast Download)</span>
+                        <span class="text-xs bg-blue-500 text-slate-900 font-bold px-2.5 py-1 rounded-md">GO</span>
+                    </a>
+                    <a href="https://ytmp3.cc/?url=${encodeURIComponent(urlInput)}" target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-purple-950/30 border border-purple-500/30 hover:bg-purple-500/10 transition-all col-span-1 sm:col-span-2">
+                        <span class="font-space font-medium text-white text-sm"><i class="fa-solid fa-music mr-2 text-purple-400"></i> MP3 Audio Converter Server</span>
+                        <span class="text-xs bg-purple-500 text-slate-900 font-bold px-2.5 py-1 rounded-md">CONVERT</span>
+                    </a>
+                `;
 
-                if (data.videoUrl) {
-                    downloadLinks.innerHTML += `
-                        <a href="${data.videoUrl}" target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-cyan-950/30 border border-cyan-500/30 hover:bg-cyan-500/10 transition-all">
-                            <span class="font-space font-medium text-white text-sm"><i class="fa-solid fa-video mr-2 text-cyan-400"></i> Video MP4</span>
-                            <span class="text-xs bg-cyan-500 text-slate-900 font-bold px-2.5 py-1 rounded-md">DOWNLOAD</span>
-                        </a>`;
-                }
-                if (data.audioUrl) {
-                    downloadLinks.innerHTML += `
-                        <a href="${data.audioUrl}" target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-blue-950/30 border border-blue-500/30 hover:bg-blue-500/10 transition-all">
-                            <span class="font-space font-medium text-white text-sm"><i class="fa-solid fa-music mr-2 text-blue-400"></i> Audio MP3</span>
-                            <span class="text-xs bg-blue-500 text-slate-900 font-bold px-2.5 py-1 rounded-md">DOWNLOAD</span>
-                        </a>`;
-                }
                 loading.classList.add('hidden');
                 resultSection.classList.remove('hidden');
+
             } catch (err) {
                 loading.classList.add('hidden');
-                showError('Unable to fetch video details. Please try another link!');
+                showError('Unable to process this link. Please check the URL and try again!');
             } finally {
                 fetchBtn.disabled = false;
             }

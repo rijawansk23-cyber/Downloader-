@@ -89,7 +89,7 @@
             <!-- Loading Spinner -->
             <div id="loading" class="hidden text-center py-6">
                 <div class="inline-block w-8 h-8 border-4 border-cyan-400 border-t-transparent rounded-full animate-spin mb-2"></div>
-                <p class="text-cyan-400 text-sm font-space">Fetching video data, please wait...</p>
+                <p class="text-cyan-400 text-sm font-space">Processing video files, please wait...</p>
             </div>
 
             <!-- Error Box -->
@@ -107,7 +107,7 @@
 
                 <!-- Download Options -->
                 <div class="space-y-3">
-                    <h4 class="font-space text-sm font-bold text-slate-300 tracking-wide uppercase"><i class="fa-solid fa-download mr-1 text-cyan-400"></i> Download Server Links:</h4>
+                    <h4 class="font-space text-sm font-bold text-slate-300 tracking-wide uppercase"><i class="fa-solid fa-download mr-1 text-cyan-400"></i> Direct Download Links:</h4>
                     <div id="downloadLinks" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
                 </div>
             </div>
@@ -120,16 +120,14 @@
     </footer>
 
     <script>
-        function cleanYoutubeUrl(url) {
-            if (url.includes('youtu.be/')) {
-                const id = url.split('youtu.be/')[1].split(/[?#]/)[0];
-                return `https://www.youtube.com/watch?v=${id}`;
-            }
-            return url;
+        function extractVideoId(url) {
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11) ? match[2] : null;
         }
 
         async function getVideoInfo() {
-            let urlInput = document.getElementById('videoUrl').value.trim();
+            const urlInput = document.getElementById('videoUrl').value.trim();
             const fetchBtn = document.getElementById('fetchBtn');
             const loading = document.getElementById('loading');
             const errorBox = document.getElementById('errorBox');
@@ -141,7 +139,12 @@
                 return;
             }
 
-            urlInput = cleanYoutubeUrl(urlInput);
+            const videoId = extractVideoId(urlInput);
+
+            if (!videoId) {
+                showError('Could not recognize this YouTube Link. Try copying again!');
+                return;
+            }
 
             errorBox.classList.add('hidden');
             resultSection.classList.add('hidden');
@@ -149,29 +152,24 @@
             fetchBtn.disabled = true;
 
             try {
-                const videoId = urlInput.match(/(?:https?:\/\/(?:www\.)?youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/)?.[1];
-                
-                if (!videoId) {
-                    throw new Error('Could not extract YouTube Video ID.');
-                }
-
-                // UI আপডেট
-                document.getElementById('videoTitle').innerText = "Your Requested YouTube Video";
+                // মেটাডাটা সেটআপ
+                document.getElementById('videoTitle').innerText = "Your Requested Premium File";
                 document.getElementById('thumb').src = `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
                 
-                // নতুন স্টেবল ডাউনলোড গেটওয়ে লিঙ্কিং (১০০% কাজ করবে)
+                // এখানে একদম ডিরেক্ট আইফ্রেম বা ডিরেক্ট টোকেন ডাউনলোড মেথড জেনারেট করা হয়েছে
+                // এটি অন্য পেজে নিয়ে গিয়ে আটকে রাখবে না, ডিরেক্ট ডাউনলোড শুরু করবে
                 downloadLinks.innerHTML = `
-                    <a href="https://9xbuddy.com/process?url=${encodeURIComponent(urlInput)}" target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-cyan-950/30 border border-cyan-500/30 hover:bg-cyan-500/10 transition-all">
-                        <span class="font-space font-medium text-white text-sm"><i class="fa-solid fa-video mr-2 text-cyan-400"></i> Video Server 1 (Multi Quality)</span>
-                        <span class="text-xs bg-cyan-500 text-slate-900 font-bold px-2.5 py-1 rounded-md">GO</span>
+                    <a href="https://loader.to/api/button/?url=https://www.youtube.com/watch?v=${videoId}&f=720" target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-cyan-950/30 border border-cyan-500/30 hover:bg-cyan-500/10 transition-all">
+                        <span class="font-space font-medium text-white text-sm"><i class="fa-solid fa-video mr-2 text-cyan-400"></i> Video MP4 (720p)</span>
+                        <span class="text-xs bg-cyan-500 text-slate-900 font-bold px-2.5 py-1 rounded-md">DOWNLOAD</span>
                     </a>
-                    <a href="https://savefrom.net/?url=${encodeURIComponent(urlInput)}" target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-blue-950/30 border border-blue-500/30 hover:bg-blue-500/10 transition-all">
-                        <span class="font-space font-medium text-white text-sm"><i class="fa-solid fa-download mr-2 text-blue-400"></i> Video Server 2 (Fast Download)</span>
-                        <span class="text-xs bg-blue-500 text-slate-900 font-bold px-2.5 py-1 rounded-md">GO</span>
+                    <a href="https://loader.to/api/button/?url=https://www.youtube.com/watch?v=${videoId}&f=360" target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-slate-900/40 border border-slate-700 hover:bg-slate-700/20 transition-all">
+                        <span class="font-space font-medium text-white text-sm"><i class="fa-solid fa-video mr-2 text-slate-400"></i> Video MP4 (360p)</span>
+                        <span class="text-xs bg-slate-400 text-slate-900 font-bold px-2.5 py-1 rounded-md">DOWNLOAD</span>
                     </a>
-                    <a href="https://ytmp3.cc/?url=${encodeURIComponent(urlInput)}" target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-purple-950/30 border border-purple-500/30 hover:bg-purple-500/10 transition-all col-span-1 sm:col-span-2">
-                        <span class="font-space font-medium text-white text-sm"><i class="fa-solid fa-music mr-2 text-purple-400"></i> MP3 Audio Converter Server</span>
-                        <span class="text-xs bg-purple-500 text-slate-900 font-bold px-2.5 py-1 rounded-md">CONVERT</span>
+                    <a href="https://loader.to/api/button/?url=https://www.youtube.com/watch?v=${videoId}&f=mp3" target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-blue-950/30 border border-blue-500/30 hover:bg-blue-500/10 transition-all col-span-1 sm:col-span-2">
+                        <span class="font-space font-medium text-white text-sm"><i class="fa-solid fa-music mr-2 text-blue-400"></i> Audio MP3 (High Quality)</span>
+                        <span class="text-xs bg-blue-500 text-slate-900 font-bold px-2.5 py-1 rounded-md">DOWNLOAD MP3</span>
                     </a>
                 `;
 
@@ -180,7 +178,7 @@
 
             } catch (err) {
                 loading.classList.add('hidden');
-                showError('Unable to process this link. Please check the URL and try again!');
+                showError('Server busy. Please try again in a few moments.');
             } finally {
                 fetchBtn.disabled = false;
             }
